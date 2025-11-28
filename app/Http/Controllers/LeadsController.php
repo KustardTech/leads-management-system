@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Leads;
@@ -11,8 +11,8 @@ class LeadsController extends Controller
 
     public function leadsPage()
     {
-        //$leads=Leads::all();
-        $leads=Leads::paginate(10);
+        $leads=Leads::all();
+        // $leads=Leads::paginate(10);
         return view('Dashboard.Leads.lead',compact('leads'));
     }
 
@@ -77,20 +77,50 @@ class LeadsController extends Controller
         return view('Dashboard.Leads.edit',compact('leadsedit','categories'));
     }
 
-    public function leadsUpdate(Request $request,$id)
-    {
-        $lead=Leads::findOrFail($id);
-        $image=$request->except('image');
-        if($request->hasFile('image'))
-        {
-            $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('uploads/leads'), $imageName);
-            $image['image'] = $imageName;
+    // public function leadsUpdate(Request $request,$id)
+    // {
+    //     $lead=Leads::findOrFail($id);
+    //     $image=$request->except('image');
+    //     if($request->hasFile('image'))
+    //     {
+    //         $imageName = time() . '.' . $request->image->extension();
+    //         $request->image->move(public_path('uploads/leads'), $imageName);
+    //         $image['image'] = $imageName;
+    //     }
+    //       $lead->update($image);
+    //     return redirect()->route('leads.page')->with('success',"Leads data have been Modified");
+       
+    // }
+
+
+
+    public function leadsUpdate(Request $request, $id)
+{
+    $lead = Leads::findOrFail($id);
+
+    $data = $request->except('image');
+
+    // If a new image is uploaded
+    if ($request->hasFile('image')) {
+
+        // Delete old image if exists
+        if ($lead->image && Storage::disk('public')->exists($lead->image)) {
+            Storage::disk('public')->delete($lead->image);
         }
-          $lead->update($image);
-        return redirect()->route('leads.page')->with('success',"Leads data have been Modified");
-       // return view('Dashboard.Leads.update');
+
+        // Store new image in storage/app/public/uploads
+        $path = $request->file('image')->store('uploads', 'public');
+
+        // Save full path (uploads/xxxxxx.png)
+        $data['image'] = $path;
     }
+
+    $lead->update($data);
+
+    return redirect()->route('leads.page')
+                     ->with('success', 'Leads data has been modified');
+}
+
     
 
     public function leadsDelete($id)

@@ -2,55 +2,74 @@
 @extends('layouts.app')
 @section('title','Category Page')
 @section('content')
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
-</head>
-<body>
-    <div class="container py-4">
-        <center><h2>Category Page</h2></center>
+<div class="app-content">
+    <div class="container d-flex justify-content-center mt-5">
 
-        <div class="mb-3">
-            <a href="{{ route('category.add') }}"  class="btn btn-success">Add Category</a>
-        </div>
+        <div class="col-md-8"> 
 
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        
-        <table class="table table-bordered table-striped">
-    <thead class="table-dark">
-        <tr>
-            <th>Category Name</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+            <div class="card mb-4">
 
-    <tbody>
-        @foreach ($categories as $index => $cat)
-            <tr>
-                <td>{{ $cat->name }}</td>
+            
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">Category List</h3>
 
-                <td>
-                    <a href="{{ route('category.edit', $cat->id) }}" 
-                       class="btn btn-warning btn-sm me-2">
-                       Edit
+                    <a href="{{ route('category.add') }}" class="btn btn-success btn-sm" style="margin-left:600px;">
+                        Add Category
                     </a>
+                </div>
 
-                    <form action="{{ route('category.delete', $cat->id) }}" 
-                          method="POST" 
-                          style="display:inline-block;">
-                        @csrf
-                        @method('DELETE')
+               
+                <div class="card-body">
 
-                        <button type="submit" class="btn btn-danger btn-sm"
-                            onclick="return confirm('Are you sure you want to delete this category?');">
-                            Delete
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
- <div>
+                    @if(session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
+
+                    <table class="table table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th style="width: 60%">Category Name</th>
+                                <th style="width: 40%">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach ($categories as $cat)
+                                <tr class="align-middle">
+                                    <td>{{ $cat->name }}</td>
+
+                                    <td>
+                                        <a href="{{ route('category.edit', $cat->id) }}" 
+                                            class="btn btn-warning btn-sm me-2">
+                                            Edit
+                                        </a>
+
+                                        <form action="{{ route('category.delete', $cat->id) }}" 
+                                              method="POST" 
+                                              style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" 
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Are you sure you want to delete this category?');">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+
+               
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
     @endsection
 
