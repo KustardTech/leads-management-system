@@ -1,5 +1,6 @@
 @extends('layouts.title')
 @extends('layouts.app')
+@section('title','Leads Add Page')
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 <div class="app-content">
