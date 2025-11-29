@@ -18,6 +18,26 @@ class CategoryController extends Controller
         return view('Dashboard.Category.add');
     }
 
+    
+    public function validateCategoryAddPage(Request $request)
+    {
+       $request->validate(
+        ['category_name'=>"required|unique:category_files,name"],
+        ['category_name.required'=>"Category name is required",
+        'category_name.unique'=>"Category alreday registered enter new one"]
+       );
+
+      Category::create([
+        'name'=>$request->category_name
+        
+       ]);
+
+      
+          return redirect()->route('category')->with('success', "Successfully added Category");
+       
+
+    }
+
      public function categoryEdit($id)
     {
         $category=Category::findOrFail($id);
@@ -51,27 +71,8 @@ class CategoryController extends Controller
     $category=Category::findOrFail($id);
     $category->delete();
     return redirect()->route('category')->with('success',"Data Removed Successfully");
-   // return view('Dashboard.Category.delete');
    }
    
 
 
-    public function validateCategoryAddPage(Request $request)
-    {
-       $request->validate(
-        ['category_name'=>"required|unique:category_files,name"],
-        ['category_name.required'=>"Category name is required",
-        'category_name.unique'=>"Category alreday registered enter new one"]
-       );
-
-      Category::create([
-        'name'=>$request->category_name
-        
-       ]);
-
-      
-          return redirect()->route('category')->with('success', "Successfully added Category");
-       
-
-    }
 }

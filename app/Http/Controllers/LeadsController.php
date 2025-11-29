@@ -12,9 +12,16 @@ class LeadsController extends Controller
     public function leadsPage()
     {
         $leads=Leads::all();
-        // $leads=Leads::paginate(10);
         return view('Dashboard.Leads.lead',compact('leads'));
     }
+//     public function leadsPage()
+// {
+//     // Get the 5 most recent leads, ordered by creation date (assuming 'created_at' column exists)
+//     $leads = Leads::latest()->take(5)->get();
+
+//     return view('Dashboard.Leads.lead', compact('leads'));
+// }
+
 
     public function leadsAdd()
     {

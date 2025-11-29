@@ -5,43 +5,25 @@
 
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-
-
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
-
 <div class="app-content">
     <div class="container d-flex justify-content-center mt-5">
-
         <div class="col-md-lg"> 
-
             <div class="card card-primary card-outline mb-4">
-
-    <div class="card-header d-flex justify-content-between align-items-center">
-    <h4 class="card-title mb-0"><b>All Leads</b></h4> 
-    <a href="{{ route('leads.add') }}" class="btn btn-success btn-sm" style="margin-left:780px;">Add Lead</a>
-    </div>
-    
-
-
-              
-                <div class="card-body">
-
+            <div class="card-header d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0"><b>All Leads</b></h4> 
+             <a href="{{ route('leads.add') }}" class="btn btn-success btn-sm" style="margin-left:780px;">Add Lead</a>
+             </div> 
+              <div class="card-body">
                     @if(session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
-                      
                      <div class="mb-3">
                         <input type="text" id="userSearch" class="form-control" placeholder="Search leads...">
                     </div>
-
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover" id="leadsTable">
                             <thead class="table-dark">
@@ -88,11 +70,10 @@
 
                 </div>
             </div>
-
         </div>
-
     </div>
 </div>
+
 <script>
 $(document).ready(function() {
 
@@ -112,6 +93,5 @@ $(document).ready(function() {
 
 });
 </script>
-
 @endsection
 

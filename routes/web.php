@@ -6,7 +6,7 @@ use App\Http\Controllers\CategoryController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('User.login');
 });
 
 
@@ -18,7 +18,7 @@ Route::post('/check-login',[UserController::class,'loginValidate'])->name('check
 
 
                                                                                                                                                                                                                                             
-Route::middleware('auth')->group( function()
+Route::middleware(['auth'])->group( function()
 {
  Route::get('/dashboard',[UserController::class,'dashboard'])->name('all.dashboard');
 
